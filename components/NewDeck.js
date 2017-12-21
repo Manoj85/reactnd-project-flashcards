@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
 import { purple, blue, gray } from '../utils/colors'
 
 class NewDeck extends Component {
@@ -7,24 +7,19 @@ class NewDeck extends Component {
         deskName: ''
     }
 
-    handleInput = (text) => {
-        this.setState({ deskName: text })
-    }
-
-    handleSubmit = (text) => {
-        console.log(`Submitting .. ${this.state.deskName}`)
+    handleTextChange = (deskName) => {
+        this.setState(() => ({ deskName }) )
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Text style={styles.newDeckText}>Enter Deck Name</Text>
                 <TextInput style= {styles.input}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
-                           onChangeText={this.handleInput}
-                           onSubmitEditing={this.handleSubmit}/>
-            </View>
+                           onChangeText={this.handleTextChange}/>
+            </KeyboardAvoidingView>
         )
     }
 }

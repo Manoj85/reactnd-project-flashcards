@@ -7,8 +7,8 @@ import { Provider } from 'react-redux'
 import { Constants } from 'expo'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
-import DeckList from './components/DeckList'
-import NewDeck from './components/NewDeck'
+import DeckList from './components/views/DeckList'
+import NewDeck from './components/views/NewDeck'
 import reducer from './reducers'
 
 function UdaciStatusBar ({backgroundColor, ...props}) {

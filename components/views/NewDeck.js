@@ -1,27 +1,44 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
-import {purple, blue, gray, white} from '../utils/colors'
+import {View, Text, StyleSheet, TextInput, KeyboardAvoidingView} from 'react-native'
+import {purple, blue, gray, white} from '../../utils/colors'
+import TextButton from '../shared/TextButton'
 
 class NewDeck extends Component {
     state = {
-        deskName: ''
+        deckTitle: ''
     }
 
-    handleTextChange = (deskName) => {
-        this.setState(() => ({ deskName }) )
+    handleTextChange = (deckTitle) => {
+        this.setState(() => ({ deckTitle }) )
+    }
+
+    createDeck = () => {
+        const { deckTitle } = this.state
+    }
+
+    reset = () => {
+        this.setState(() => ({ 'deckTitle': '' }) )
     }
 
     render() {
-        const { deckName } = this.state;
+        const { deckTitle } = this.state
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Text style={styles.newDeckText}>Enter the title of your new Deck </Text>
                 <TextInput style= {styles.input}
                            placeholder="Deck Title"
-                           value={deckName}
+                           value={deckTitle}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                            onChangeText={this.handleTextChange}/>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+                    <TextButton onPress={this.createDeck}>
+                        ADD
+                    </TextButton>
+                    <TextButton onPress={this.reset}>
+                        CLEAR
+                    </TextButton>
+                </View>
             </KeyboardAvoidingView>
         )
     }

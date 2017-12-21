@@ -1,20 +1,33 @@
-import { RECEIVE_DECKS, ADD_DECK } from '../actions'
+import { combineReducers } from 'redux'
+
+import { GET_DECKS, GET_DECK, ADD_DECK, UPDATE_DECK, DELETE_DECK } from '../actions/actionTypes'
 
 function decks (state = {}, action) {
+    const { decks, deck } = action
+
     switch (action.type) {
-        case RECEIVE_DECKS :
+        case GET_DECKS:
             return {
                 ...state,
-                ...action.decks,
-            }
-        case ADD_DECK :
+                decks: {
+                    ...decks
+                }
+            };
+
+        case ADD_DECK:
+            console.log(`ADD_DECK\n${JSON.stringify(state.decks)}`)
             return {
                 ...state,
-                ...action.deck
+                decks: {
+                    ...state.decks, ...deck
+                }
             }
-        default :
+
+        default:
             return state
     }
 }
 
-export default decks
+export default combineReducers({
+    decks
+})

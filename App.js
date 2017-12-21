@@ -8,7 +8,7 @@ import { Constants } from 'expo'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import DeckList from './components/views/DeckList'
-import NewDeck from './components/views/NewDeck'
+import AddDeck from './components/views/AddDeck'
 import reducer from './reducers'
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
@@ -27,8 +27,8 @@ const Tabs = TabNavigator({
             tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
         }
     },
-    NewDeck: {
-        screen: NewDeck,
+    AddDeck: {
+        screen: AddDeck,
         navigationOptions: {
             tabBarLabel: 'New Deck',
             tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />

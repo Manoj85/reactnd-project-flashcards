@@ -1,16 +1,16 @@
-export const RECEIVE_DESKS = 'RECEIVE_DESKS'
-export const ADD_DECK = 'ADD_DECK'
+import { GET_DECKS, GET_DECK, ADD_DECK, UPDATE_DECK, DELETE_DECK } from './actionTypes'
 
-export function receiveDecks (decks) {
+export function loadDecks(data) {
+    console.log(`actions - loadDecks \n ${JSON.stringify(data)}`)
     return {
-        type: RECEIVE_DESKS,
-        decks,
+        type: GET_DECKS,
+        decks: data
     }
 }
 
 export function addDeck (deck) {
     return {
         type: ADD_DECK,
-        deck,
+        deck
     }
 }

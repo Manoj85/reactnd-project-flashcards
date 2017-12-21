@@ -1,33 +1,50 @@
 import React, { Component } from 'react'
 import {View, Text, StyleSheet, TextInput, KeyboardAvoidingView} from 'react-native'
+import { connect } from 'react-redux'
+
 import {purple, blue, gray, white} from '../../utils/colors'
 import TextButton from '../shared/TextButton'
+import { saveDeckTitle } from '../../utils/api'
+import { addDeck } from '../../actions'
+import { guid } from '../../utils/helper'
 
-class NewDeck extends Component {
+class AddDeck extends Component {
     state = {
-        deckTitle: ''
+        deck_title: ''
     }
 
-    handleTextChange = (deckTitle) => {
-        this.setState(() => ({ deckTitle }) )
+    handleTextChange = (deck_title) => {
+        this.setState(() => ({ deck_title }) )
     }
 
     createDeck = () => {
-        const { deckTitle } = this.state
+        console.log(`createDeck`)
+        const { deck_title } = this.state
+        const deck_key = guid()
+
+        saveDeckTitle(deck_key, deck_title)
+            .then(() => {
+                this.props.addDeck({
+                    [deck_key]: {title: deck_title, questions: []}
+                })
+                this.resetDeskTitle()
+            });
+
+        // Navigate back to Deck View or Deck List
     }
 
-    reset = () => {
-        this.setState(() => ({ 'deckTitle': '' }) )
+    resetDeskTitle = () => {
+        this.setState(() => ({ 'deck_title': '' }) )
     }
 
     render() {
-        const { deckTitle } = this.state
+        const { deck_title } = this.state
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Text style={styles.newDeckText}>Enter the title of your new Deck </Text>
                 <TextInput style= {styles.input}
                            placeholder="Deck Title"
-                           value={deckTitle}
+                           value={deck_title}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                            onChangeText={this.handleTextChange}/>
@@ -35,7 +52,7 @@ class NewDeck extends Component {
                     <TextButton onPress={this.createDeck}>
                         ADD
                     </TextButton>
-                    <TextButton onPress={this.reset}>
+                    <TextButton onPress={this.resetDeskTitle}>
                         CLEAR
                     </TextButton>
                 </View>
@@ -63,4 +80,10 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NewDeck
+function mapStateToProps (state, { navigation }) {
+    return {}
+}
+
+export default connect(mapStateToProps, {
+    addDeck,
+})(AddDeck)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native'
-import { purple, blue, gray } from '../utils/colors'
+import {purple, blue, gray, white} from '../utils/colors'
 
 class NewDeck extends Component {
     state = {
@@ -12,10 +12,13 @@ class NewDeck extends Component {
     }
 
     render() {
+        const { deckName } = this.state;
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
-                <Text style={styles.newDeckText}>Enter Deck Name</Text>
+                <Text style={styles.newDeckText}>Enter the title of your new Deck </Text>
                 <TextInput style= {styles.input}
+                           placeholder="Deck Title"
+                           value={deckName}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                            onChangeText={this.handleTextChange}/>
@@ -31,13 +34,15 @@ const styles = StyleSheet.create({
     },
     newDeckText: {
         color: blue,
-        fontSize: 20
+        backgroundColor: white,
+        fontSize: 16,
+        marginBottom: 15
     },
     input: {
         height: 40,
         borderColor: gray,
         borderWidth: 1,
-        marginTop: 10
+        paddingLeft: 10
     }
 })
 

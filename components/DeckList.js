@@ -35,5 +35,5 @@ function mapStateToProps (decks) {
 }
 
 export default connect(
-    mapStateToProps,
+    mapStateToProps
 )(DeckList)

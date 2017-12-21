@@ -16,10 +16,7 @@ const styles = StyleSheet.create({
     iosSubmitBtn: {
         backgroundColor: purple,
         padding: 10,
-        borderRadius: 7,
-        height: 45,
-        marginLeft: 40,
-        marginRight: 40
+        borderRadius: 7
     },
     AndroidSubmitBtn: {
         backgroundColor: purple,

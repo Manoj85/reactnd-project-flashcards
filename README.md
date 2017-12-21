@@ -15,10 +15,11 @@ including handling infinite lists, routing, and user input.
 
 ### Installation
 
+ * cd `reactnd-project-flashcards`
+ * `yarn start`
 
 
-
-#### Specific Requirements
+### Specific Requirements
 
  * Use create-react-native-app to build your project.
  * Allow users to create a deck which can hold an unlimited number of cards.
@@ -28,9 +29,9 @@ including handling infinite lists, routing, and user input.
  * Users should be able to quiz themselves on a specific deck and receive a score once they're done.
  * Users should receive a notification to remind themselves to study if they haven't already for that day.
 
-#### Views
+### Views
 
-Your application should have, at a minimum, five views.
+Our application will have five views.
 
    **Deck List View (Default View)**
    
@@ -65,7 +66,7 @@ Your application should have, at a minimum, five views.
         An option to submit the new question
 
 
-#### Data
+### Data
 
 We'll use AsyncStorage to store our decks and flashcards. 
 Redux is optional for this project.
@@ -104,7 +105,7 @@ Notice each deck creates a new key on the object.
 * Each deck has a `title` and a `questions` key. 
 * title is the `title` for the specific deck and questions is an `array of questions and answers` for that deck.
 
-#### Tip
+### Tip
 
 To manage your AsyncStorage database, we created four different helper methods.
 

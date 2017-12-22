@@ -7,9 +7,7 @@ export function loadDecks(decks) {
     return {
         type: GET_DECKS,
         decks
-    };
-
-
+    }
 }
 
 export function addDeck (deck) {

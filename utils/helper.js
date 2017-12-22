@@ -16,7 +16,7 @@ export function guid() {
 }
 
 export function isEmpty(obj){
-    return (Object.getOwnPropertyNames(obj).length === 0);
+    return (!!obj && Object.getOwnPropertyNames(obj).length === 0);
 }
 
 

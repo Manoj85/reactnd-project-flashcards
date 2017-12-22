@@ -21,13 +21,12 @@ class AddDeck extends Component {
         console.log(`createDeck`)
         const { deck_title } = this.state
 
-        saveDeckTitle(deck_title)
-            .then(() => {
+        saveDeckTitle(deck_title).then(value =>
                 this.props.addDeck({
                     [deck_title]: {title: deck_title, questions: []}
                 })
-                this.resetDeskTitle()
-            });
+            )
+            .then(() => this.resetDeskTitle())
 
         // Navigate back to Deck View or Deck List
     }

@@ -40,14 +40,12 @@ function setDummyData () {
 
 export function setDeckData (decks) {
     console.log(` ==== setDeckData ==== \n`)
-    console.log(JSON.stringify(decks))
-
     return decks
 }
 
 export function setDeckResults (results) {
-    console.log(`formatDeckResults`)
-    return isEmpty(JSON.parse(results))
+    const parsedResults = JSON.parse(results)
+    return isEmpty(parsedResults)
         ? setDummyData()
-        : setDeckData(JSON.parse(results))
+        : setDeckData(parsedResults)
 }

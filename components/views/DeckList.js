@@ -10,7 +10,7 @@ import { loadDecks} from '../../actions'
 class DeckList extends Component {
     state = {
         ready: false,
-        decks: []
+        deckNames: []
     }
 
     componentDidMount () {
@@ -19,17 +19,16 @@ class DeckList extends Component {
         fetchDeckResults()
             .then((decks) => this.props.loadDecks(decks))
             .then(({decks}) => {
-                console.log(`fetchDeckResults`)
-                // console.log({decks})
-                this.setState(() => ({ready: true, deckNames: Object.keys(decks) }))
+                this.setState(() => ({ready: true, deckNames: _.keys(decks) }))
             })
         ;
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log(`componentWillReceiveProps`)
         const decks = nextProps.decks
         if (decks) {
-            this.setState({ decks: _.keys(decks) });
+            this.setState({ deckNames: _.keys(decks) });
         }
     }
 
@@ -46,7 +45,6 @@ class DeckList extends Component {
         return (
             <View style={{flex: 1}}>
                 {!!deckNames && (_.map(deckNames, (deskName) => {
-
                     return (
                         <Text key={deskName}>{deskName}</Text>
                     )
@@ -59,7 +57,7 @@ class DeckList extends Component {
 
 function mapStateToProps ({decks}) {
     return {
-        decks
+        decks: decks
     }
 }
 

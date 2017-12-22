@@ -11,12 +11,9 @@ function decks (state = {}, action) {
             return decks
 
         case ADD_DECK:
-            console.log(`ADD_DECK\n${JSON.stringify(state.decks)}`)
             return {
                 ...state,
-                decks: {
-                    ...state.decks, ...deck
-                }
+                ...deck
             }
 
         default:

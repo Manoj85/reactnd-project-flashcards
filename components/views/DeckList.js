@@ -4,8 +4,8 @@ import { AppLoading} from 'expo'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import { getDecks } from '../../utils/api'
-import { loadDecks } from '../../actions'
+import { getDecks, fetchDeckResults } from '../../utils/api'
+import { loadDecks} from '../../actions'
 
 class DeckList extends Component {
     state = {
@@ -15,9 +15,15 @@ class DeckList extends Component {
 
     componentDidMount () {
         const { dispatch } = this.props
-        getDecks()
-            .then(data => dispatch(loadDecks(data)))
-            .then(({ decks }) => this.setState({ready: true, decks: _.keys(decks)}))
+
+        fetchDeckResults()
+            .then((decks) => this.props.loadDecks(decks))
+            .then(({decks}) => {
+                console.log(`fetchDeckResults`)
+                // console.log({decks})
+                this.setState(() => ({ready: true, deckNames: Object.keys(decks) }))
+            })
+        ;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -28,7 +34,10 @@ class DeckList extends Component {
     }
 
     render() {
-        const { decks, ready } = this.state
+        console.log(`DeckList - render`)
+        const { decks } = this.props
+        const { deckNames, ready } = this.state
+        console.log(`${JSON.stringify(deckNames)}`)
 
         if (ready === false) {
             return <AppLoading />
@@ -36,7 +45,13 @@ class DeckList extends Component {
 
         return (
             <View style={{flex: 1}}>
-                <Text>Deck List</Text>
+                {!!deckNames && (_.map(deckNames, (deskName) => {
+
+                    return (
+                        <Text key={deskName}>{deskName}</Text>
+                    )
+                }))
+                }
             </View>
         )
     }
@@ -48,7 +63,8 @@ function mapStateToProps ({decks}) {
     }
 }
 
+function mapStateToProps ({ decks }) {
+    return { decks }
+}
 
-export default connect(
-    mapStateToProps
-)(DeckList)
+export default connect(mapStateToProps, {loadDecks})(DeckList)

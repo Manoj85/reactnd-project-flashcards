@@ -15,5 +15,9 @@ export function guid() {
     return `${(s4() + s4()).toLowerCase()}`
 }
 
+export function isEmpty(obj){
+    return (Object.getOwnPropertyNames(obj).length === 0);
+}
+
 
 

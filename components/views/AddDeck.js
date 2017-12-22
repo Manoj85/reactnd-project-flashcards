@@ -20,12 +20,11 @@ class AddDeck extends Component {
     createDeck = () => {
         console.log(`createDeck`)
         const { deck_title } = this.state
-        const deck_key = guid()
 
-        saveDeckTitle(deck_key, deck_title)
+        saveDeckTitle(deck_title)
             .then(() => {
                 this.props.addDeck({
-                    [deck_key]: {title: deck_title, questions: []}
+                    [deck_title]: {title: deck_title, questions: []}
                 })
                 this.resetDeskTitle()
             });

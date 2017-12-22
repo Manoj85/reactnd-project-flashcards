@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { AppLoading} from 'expo'
 import { connect } from 'react-redux'
 import _ from 'lodash'
@@ -66,10 +66,12 @@ class DeckList extends Component {
                     data={deckInfo}
                     keyExtractor={(item, index) => item.deckName}
                     renderItem={({item}) => (
-                        <View style={styles.deck} key={item.deckName}>
-                            <Text style={styles.deckTitle}>{item.deckName}</Text>
-                            <Text style={styles.deckCardCount}>{item.deckCardCount} cards</Text>
-                        </View>
+                        <TouchableOpacity style={styles.deck} key={item.deckName}>
+                            <View>
+                                <Text style={styles.deckTitle}>{item.deckName}</Text>
+                                <Text style={styles.deckCardCount}>{item.deckCardCount} cards</Text>
+                            </View>
+                        </TouchableOpacity>
                     )}
                 />
             </View>
@@ -80,10 +82,15 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10
+        padding: 10,
+        alignItems: 'stretch'
     },
     deck: {
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: gray,
+        borderRadius: 8,
+        marginBottom: 10
     },
     deckTitle: {
         marginTop: 10,

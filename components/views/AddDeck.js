@@ -30,14 +30,14 @@ class AddDeck extends Component {
             .then(() => this.resetDeskTitle())
 
         // Navigate back to Deck View or Deck List
-        this.toHome()
+        this.navigateToDeckList()
     }
 
     resetDeskTitle = () => {
         this.setState(() => ({ 'deck_title': '' }) )
     }
 
-    toHome () {
+    navigateToDeckList () {
         this.props.navigation.navigate('DeckList')
     }
 

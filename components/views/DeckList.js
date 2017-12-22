@@ -6,7 +6,8 @@ import _ from 'lodash'
 
 import { getDecks, fetchDeckResults } from '../../utils/api'
 import { loadDecks} from '../../actions'
-import {blue, gray, white} from "../../utils/colors";
+import {blue, gray, white} from '../../utils/colors'
+import DeckCard from './DeckCard'
 
 class DeckList extends Component {
     state = {
@@ -67,10 +68,7 @@ class DeckList extends Component {
                     keyExtractor={(item, index) => item.deckName}
                     renderItem={({item}) => (
                         <TouchableOpacity style={styles.deck} key={item.deckName}>
-                            <View>
-                                <Text style={styles.deckTitle}>{item.deckName}</Text>
-                                <Text style={styles.deckCardCount}>{item.deckCardCount} cards</Text>
-                            </View>
+                            <DeckCard deck={item} />
                         </TouchableOpacity>
                     )}
                 />
@@ -91,22 +89,6 @@ const styles = StyleSheet.create({
         borderColor: gray,
         borderRadius: 8,
         marginBottom: 10
-    },
-    deckTitle: {
-        marginTop: 10,
-        marginBottom: 5,
-        fontSize: 16,
-        color: '#333',
-        fontWeight: '600',
-        textAlign: 'center'
-    },
-    deckCardCount: {
-        marginTop: 5,
-        marginBottom: 10,
-        fontSize: 13,
-        color: '#999',
-        fontWeight: '300',
-        textAlign: 'center'
     }
 })
 

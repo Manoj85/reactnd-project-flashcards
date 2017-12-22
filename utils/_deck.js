@@ -45,7 +45,7 @@ export function setDeckData (decks) {
 
 export function setDeckResults (results) {
     const parsedResults = JSON.parse(results)
-    return !!parsedResults && isEmpty(parsedResults)
+    return isEmpty(parsedResults)
         ? setDummyData()
         : setDeckData(parsedResults)
 }

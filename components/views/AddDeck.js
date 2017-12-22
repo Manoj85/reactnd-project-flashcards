@@ -6,7 +6,8 @@ import {purple, blue, gray, white} from '../../utils/colors'
 import TextButton from '../shared/TextButton'
 import { saveDeckTitle } from '../../utils/api'
 import { addDeck } from '../../actions'
-import { guid } from '../../utils/helper'
+import { NavigationActions } from 'react-navigation'
+import DeckList from "./DeckList";
 
 class AddDeck extends Component {
     state = {
@@ -29,10 +30,15 @@ class AddDeck extends Component {
             .then(() => this.resetDeskTitle())
 
         // Navigate back to Deck View or Deck List
+        this.toHome()
     }
 
     resetDeskTitle = () => {
         this.setState(() => ({ 'deck_title': '' }) )
+    }
+
+    toHome () {
+        this.props.navigation.navigate('DeckList')
     }
 
     render() {

@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native'
 import {purple, white} from './utils/colors'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { Constants } from 'expo'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import DeckList from './components/views/DeckList'
+import DeckDetail from './components/views/DeckDetail'
 import AddDeck from './components/views/AddDeck'
 import reducer from './reducers'
 
@@ -54,13 +55,28 @@ const Tabs = TabNavigator({
     }
 })
 
+const MainNavigator = StackNavigator({
+    Home: {
+        screen: Tabs
+    },
+    DeckDetail: {
+        screen: DeckDetail,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple
+            }
+        }
+    }
+})
+
 export default class App extends Component {
     render() {
         return (
             <Provider store={createStore(reducer)}>
                 <View style={{flex: 1}}>
                     <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
-                    <Tabs />
+                    <MainNavigator />
                 </View>
             </Provider>
         )

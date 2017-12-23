@@ -3,21 +3,25 @@ import {connect} from 'react-redux'
 import { View, Text, StyleSheet } from 'react-native';
 import {gray} from "../../utils/colors";
 
-class DeckCard extends Component {
+class Deck extends Component {
 
     render() {
-        const {deck} = this.props
+        const {deck, decks} = this.props
 
-        console.log(`${JSON.stringify(deck)}`)
+        console.log(`Deck`)
+        // console.log(JSON.stringify(decks))
+
+        const deck_key = deck['deckName']
+        const deck_title = decks[deck_key].title
+        const deck_card_count = decks[deck_key].questions.length > 0 ? decks[deck_key].questions.length : 0
 
         return (
             <View>
-                <Text style={styles.deckTitle}>{deck.deckName}</Text>
-                <Text style={styles.deckCardCount}>{deck.deckCardCount} cards</Text>
+                <Text style={styles.deckTitle}>{deck_title}</Text>
+                <Text style={styles.deckCardCount}>{deck_card_count} cards</Text>
             </View>
         )
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -51,10 +55,8 @@ const styles = StyleSheet.create({
     }
 })
 
-function mapStateToProps(state, {}) {
-    return {}
+function mapStateToProps({ decks }) {
+    return { decks }
 }
 
-export default connect(mapStateToProps, {
-
-})(DeckCard)
+export default connect(mapStateToProps)(Deck)

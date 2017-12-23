@@ -44,6 +44,7 @@ export function setDeckData (decks) {
 }
 
 export function setDeckResults (results) {
+    console.log(` ==== setDeckResults ==== \n`)
     const parsedResults = results === null ? {} : JSON.parse(results)
     return isEmpty(parsedResults)
         ? setDummyData()

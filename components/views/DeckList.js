@@ -7,7 +7,7 @@ import _ from 'lodash'
 import { getDecks, fetchDeckResults } from '../../utils/api'
 import { loadDecks} from '../../actions'
 import {blue, gray, white} from '../../utils/colors'
-import DeckCard from './DeckCard'
+import Deck from './Deck'
 
 class DeckList extends Component {
     state = {
@@ -16,14 +16,11 @@ class DeckList extends Component {
     }
 
     componentDidMount () {
-        const { dispatch } = this.props
-
         fetchDeckResults()
             .then((decks) => this.props.loadDecks(decks))
             .then(({decks}) => {
                 this.setState(() => ({
                     ready: true,
-                    // deckNames: _.keys(decks)
                     deckInfo: _.keys(decks).map((key) => {
                         return {
                             deckName: key,
@@ -39,7 +36,6 @@ class DeckList extends Component {
         console.log(`componentWillReceiveProps`)
         const decks = nextProps.decks
         if (decks) {
-            // this.setState({ deckNames: _.keys(decks) });
             this.setState( {
                 deckInfo: _.keys(decks).map((key) => {
                     return {
@@ -52,10 +48,8 @@ class DeckList extends Component {
     }
 
     render() {
-        // console.log(`DeckList - render`)
         const { decks } = this.props
-        const { deckNames, ready, deckInfo } = this.state
-        // console.log(`${JSON.stringify(deckInfo)}`)
+        const { ready, deckInfo } = this.state
 
         if (ready === false) {
             return <AppLoading />
@@ -67,8 +61,9 @@ class DeckList extends Component {
                     data={deckInfo}
                     keyExtractor={(item, index) => item.deckName}
                     renderItem={({item}) => (
-                        <TouchableOpacity style={styles.deck} key={item.deckName}>
-                            <DeckCard deck={item} />
+                        <TouchableOpacity style={styles.deck} key={item.deckName}
+                                          onPress={() => this.props.navigation.navigate('DeckDetail', {deck: item})}>
+                            <Deck deck={item} />
                         </TouchableOpacity>
                     )}
                 />
@@ -96,10 +91,6 @@ function mapStateToProps ({decks}) {
     return {
         decks: decks
     }
-}
-
-function mapStateToProps ({ decks }) {
-    return { decks }
 }
 
 export default connect(mapStateToProps, {loadDecks})(DeckList)

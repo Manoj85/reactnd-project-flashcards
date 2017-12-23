@@ -1,13 +1,15 @@
 import React from 'react'
 import { Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
-import { purple, white } from '../../utils/colors'
+import { purple, white, gray } from '../../utils/colors'
 
-export default function TextButton ({ children, onPress, style = {} }) {
+export default function TextButton ({ children, onPress, style = {}, disabled }) {
     return (
         <TouchableOpacity
-            style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn, styles.container]}
-            onPress={onPress}>
-            <Text style={[styles.submitBtnText, style]}>{children}</Text>
+            style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn, styles.container, style]}
+            onPress={onPress}
+            disabled={disabled}
+            >
+            <Text style={[styles.submitBtnText]}>{children}</Text>
         </TouchableOpacity>
     )
 }
@@ -36,7 +38,6 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center'
     },
     container: {
-        alignItems: 'center',
         marginTop: 10
     }
 })

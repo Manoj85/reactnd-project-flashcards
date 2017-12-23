@@ -1,13 +1,25 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import { View, Text, StyleSheet } from 'react-native';
-import {gray} from '../../utils/colors'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {gray, lightPurp} from '../../utils/colors'
 import Deck from './Deck'
+import TextButton from '../shared/TextButton'
 
 class DeckDetail extends Component {
     static navigationOptions = ({navigation}) => ({
         title: navigation.state.params.deck.deckName
-    });
+    })
+
+
+    addCardToDeck = () => {
+        console.log(`addCardToDeck`)
+        const { deck } = this.props.navigation.state.params
+        this.props.navigation.navigate('AddCard', { deck });
+    }
+
+    startQuiz = () => {
+        console.log(`startQuiz`)
+    }
 
     render() {
         console.log(`DeckDetail`)
@@ -19,8 +31,19 @@ class DeckDetail extends Component {
         // console.log(`${JSON.stringify(deck)}`)
 
         return (
-            <View>
+            <View style={styles.container}>
                 <Deck deck={deck} />
+
+                <View style={styles.buttonContainer}>
+                    <View style={{alignItems: 'stretch'}}>
+                        <TextButton style={styles.button} onPress={this.addCardToDeck}>
+                            Add Card
+                        </TextButton>
+                        <TextButton style={styles.button} onPress={this.startQuiz} disabled={deck.deckCardCount === 0}>
+                            Take Quiz
+                        </TextButton>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -30,14 +53,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
-        alignItems: 'stretch'
+        alignItems: 'stretch',
+        justifyContent: 'flex-start'
     },
-    deck: {
+    buttonContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: gray,
-        borderRadius: 8,
-        marginBottom: 10
+        borderWidth: 0
+    },
+    button: {
+        alignItems: 'stretch',
+        backgroundColor: lightPurp
     }
 })
 

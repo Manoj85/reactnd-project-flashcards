@@ -10,6 +10,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import DeckList from './components/views/DeckList'
 import DeckDetail from './components/views/DeckDetail'
 import AddDeck from './components/views/AddDeck'
+import AddCard from './components/views/AddCard'
 import reducer from './reducers'
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
@@ -66,6 +67,13 @@ const MainNavigator = StackNavigator({
             headerStyle: {
                 backgroundColor: purple
             }
+        }
+    },
+    AddCard: {
+        screen: AddCard,
+        navigationOptions: {
+            tabBarLabel: 'Add Card',
+            tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
         }
     }
 })

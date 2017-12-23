@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     },
     submitBtnText: {
         color: white,
-        fontSize: 16,
+        fontSize: 20,
         textAlign: 'center',
         textAlignVertical: 'center'
     },

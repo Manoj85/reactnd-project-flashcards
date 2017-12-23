@@ -19,11 +19,8 @@ class AddCard extends Component {
         deck_card_answer: ''
     }
 
-    handleTextChange = (deck_card_question) => {
-        this.setState(() => ({ deck_card_question }) )
-    }
-
     createCard = () => {
+        console.log(`createCard`)
     }
 
     render() {
@@ -35,19 +32,18 @@ class AddCard extends Component {
                            value={deck_card_question}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
-                           onChangeText={this.handleTextChange}/>
+                           onChangeText={(deck_card_question) => this.setState({deck_card_question})}/>
 
                 <Text style={styles.newCardLabelText}>Answer</Text>
                 <TextInput style= {styles.input}
                            value={deck_card_answer}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
-                           onChangeText={this.handleTextChange}/>
+                           onChangeText={(deck_card_answer) => this.setState({deck_card_answer})}/>
 
                 <TextButton style={styles.submitBtn} onPress={this.createCard}>
                     Submit
                 </TextButton>
-
             </KeyboardAvoidingView>
         )
     }
@@ -75,8 +71,11 @@ const styles = StyleSheet.create({
     },
     submitBtn: {
         justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
-        marginTop: 20
+        alignSelf: 'center',
+        alignItems: 'stretch',
+        marginTop: 20,
+        padding: 15,
+        borderRadius: 8
     }
 })
 

@@ -11,6 +11,7 @@ import DeckList from './components/views/DeckList'
 import DeckDetail from './components/views/DeckDetail'
 import AddDeck from './components/views/AddDeck'
 import AddCard from './components/views/AddCard'
+import Quiz from './components/views/Quiz'
 import reducer from './reducers'
 
 function UdaciStatusBar ({backgroundColor, ...props}) {
@@ -72,8 +73,15 @@ const MainNavigator = StackNavigator({
     AddCard: {
         screen: AddCard,
         navigationOptions: {
-            tabBarLabel: 'Add Card',
-            tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />,
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple
+            }
+        }
+    },
+    Quiz: {
+        screen: Quiz,
+        navigationOptions: {
             headerTintColor: white,
             headerStyle: {
                 backgroundColor: purple

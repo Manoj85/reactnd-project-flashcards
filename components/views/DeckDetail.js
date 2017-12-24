@@ -18,7 +18,11 @@ class DeckDetail extends Component {
     }
 
     startQuiz = () => {
-        console.log(`startQuiz`)
+        console.log(`startQuiz\n`)
+        const { deck } = this.props.navigation.state.params
+
+        console.log(`${JSON.stringify(deck)}`)
+        this.props.navigation.navigate('Quiz', { deck })
     }
 
     render() {
@@ -28,7 +32,7 @@ class DeckDetail extends Component {
         const { decks } = this.props
         const { deck } = this.props.navigation.state.params
 
-        // console.log(`${JSON.stringify(deck)}`)
+        let isTakeQuizDisabled = deck.questions.length === 0
 
         return (
             <View style={styles.container}>
@@ -39,7 +43,7 @@ class DeckDetail extends Component {
                         <TextButton style={styles.button} onPress={this.addCardToDeck}>
                             Add Card
                         </TextButton>
-                        <TextButton style={styles.button} onPress={this.startQuiz} disabled={deck.deckCardCount === 0}>
+                        <TextButton style={styles.button} onPress={this.startQuiz} disabled={isTakeQuizDisabled}>
                             Take Quiz
                         </TextButton>
                     </View>

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Alert} from 'react-native'
 import { connect } from 'react-redux'
 
-
 import { isEmptyOrNull } from '../../utils/helper'
 import {purple, blue, gray, white} from '../../utils/colors'
 import TextButton from '../shared/TextButton'

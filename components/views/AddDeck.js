@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet, TextInput, KeyboardAvoidingView} from 'react-native'
+import {View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Alert} from 'react-native'
 import { connect } from 'react-redux'
 
 import {purple, blue, gray, white} from '../../utils/colors'
@@ -8,8 +8,14 @@ import { saveDeckTitle } from '../../utils/api'
 import { addDeck } from '../../actions'
 import { NavigationActions } from 'react-navigation'
 import DeckList from "./DeckList";
+import {isEmptyOrNull} from '../../utils/helper'
 
 class AddDeck extends Component {
+
+    static navigationOptions = ({navigation}) => ({
+        title: `Add Deck`
+    })
+
     state = {
         deck_title: ''
     }
@@ -17,6 +23,10 @@ class AddDeck extends Component {
     createDeck = () => {
         console.log(`createDeck`)
         const { deck_title } = this.state
+
+        if (isEmptyOrNull(deck_title)) {
+            return Alert.alert('Error!', 'Desk Title should not be empty')
+        }
 
         saveDeckTitle(deck_title).then(value =>
                 this.props.addDeck({
@@ -48,7 +58,7 @@ class AddDeck extends Component {
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
                            onChangeText={(deck_title) => this.setState({deck_title})}/>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
+                <View style={styles.btnContainer}>
                     <TextButton onPress={this.createDeck}>
                         ADD
                     </TextButton>
@@ -64,11 +74,16 @@ class AddDeck extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: white,
         padding: 20
+    },
+    btnContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
     },
     newDeckText: {
         color: blue,
-        backgroundColor: white,
         fontSize: 16,
         marginBottom: 15
     },

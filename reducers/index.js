@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 
-import { GET_DECKS, GET_DECK, ADD_DECK, UPDATE_DECK, DELETE_DECK } from '../actions/actionTypes'
+import { GET_DECKS, ADD_DECK, ADD_CARD_TO_DECK } from '../actions/actionTypes'
 
 function decks (state = {}, action) {
     console.log(`decks reducer`)
-    const { decks, deck } = action
+    const { decks, deck, card } = action
 
     switch (action.type) {
         case GET_DECKS:
@@ -14,6 +14,12 @@ function decks (state = {}, action) {
             return {
                 ...state,
                 ...deck
+            }
+
+        case ADD_CARD_TO_DECK:
+            return {
+                ...state,
+                [deck.title]: deck
             }
 
         default:

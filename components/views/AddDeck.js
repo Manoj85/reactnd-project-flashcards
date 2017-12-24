@@ -14,10 +14,6 @@ class AddDeck extends Component {
         deck_title: ''
     }
 
-    handleTextChange = (deck_title) => {
-        this.setState(() => ({ deck_title }) )
-    }
-
     createDeck = () => {
         console.log(`createDeck`)
         const { deck_title } = this.state
@@ -51,7 +47,7 @@ class AddDeck extends Component {
                            value={deck_title}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
-                           onChangeText={this.handleTextChange}/>
+                           onChangeText={(deck_title) => this.setState({deck_title})}/>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end'}}>
                     <TextButton onPress={this.createDeck}>
                         ADD
@@ -89,5 +85,5 @@ function mapStateToProps (state, { navigation }) {
 }
 
 export default connect(mapStateToProps, {
-    addDeck,
+    addDeck
 })(AddDeck)

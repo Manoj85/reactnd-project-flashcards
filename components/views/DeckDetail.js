@@ -7,7 +7,7 @@ import TextButton from '../shared/TextButton'
 
 class DeckDetail extends Component {
     static navigationOptions = ({navigation}) => ({
-        title: navigation.state.params.deck.deckName
+        title: navigation.state.params.deck.title
     })
 
 

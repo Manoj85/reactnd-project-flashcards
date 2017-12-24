@@ -11,23 +11,14 @@ import Deck from './Deck'
 
 class DeckList extends Component {
     state = {
-        ready: false,
-        deckInfo: []
+        ready: false
     }
 
     componentDidMount () {
         fetchDeckResults()
             .then((decks) => this.props.loadDecks(decks))
             .then(({decks}) => {
-                this.setState(() => ({
-                    ready: true,
-                    deckInfo: _.keys(decks).map((key) => {
-                        return {
-                            deckName: key,
-                            deckCardCount: decks[key].questions.length > 0 ? decks[key].questions.length : 0
-                        }
-                    })
-                }))
+                this.setState(() => ({ready: true}))
             })
         ;
     }
@@ -35,21 +26,18 @@ class DeckList extends Component {
     componentWillReceiveProps(nextProps) {
         console.log(`componentWillReceiveProps`)
         const decks = nextProps.decks
-        if (decks) {
-            this.setState( {
-                deckInfo: _.keys(decks).map((key) => {
-                    return {
-                        deckName: key,
-                        deckCardCount: decks[key].questions.length > 0 ? decks[key].questions.length : 0
-                    }
-                })
-            })
-        }
     }
 
     render() {
         const { decks } = this.props
-        const { ready, deckInfo } = this.state
+        const { ready } = this.state
+
+        const decks_arr = _.keys(decks).map((key) => {
+            return decks[key]
+        })
+
+        console.log(`DeckList \n`)
+        console.log(`${JSON.stringify(decks_arr)}`)
 
         if (ready === false) {
             return <AppLoading />
@@ -58,10 +46,10 @@ class DeckList extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
-                    data={deckInfo}
-                    keyExtractor={(item, index) => item.deckName}
+                    data={decks_arr}
+                    keyExtractor={(item, index) => item.title}
                     renderItem={({item}) => (
-                        <TouchableOpacity style={styles.deck} key={item.deckName}
+                        <TouchableOpacity style={styles.deck} key={item.title}
                                           onPress={() => this.props.navigation.navigate('DeckDetail', {deck: item})}>
                             <Deck deck={item} />
                         </TouchableOpacity>

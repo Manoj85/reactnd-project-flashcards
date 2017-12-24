@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import {View, Text, StyleSheet, TextInput, KeyboardAvoidingView} from 'react-native'
+import {View, Text, StyleSheet, TextInput, KeyboardAvoidingView, Alert} from 'react-native'
 import { connect } from 'react-redux'
 
+
+import { isEmptyOrNull } from '../../utils/helper'
 import {purple, blue, gray, white} from '../../utils/colors'
 import TextButton from '../shared/TextButton'
-import { saveDeckTitle } from '../../utils/api'
-import { addDeck } from '../../actions'
+import { saveCardToDeck } from '../../utils/api'
+import { addCardToDeck } from '../../actions'
 import { NavigationActions } from 'react-navigation'
-import DeckList from "./DeckList";
 
 class AddCard extends Component {
     static navigationOptions = ({navigation}) => ({
@@ -15,31 +16,52 @@ class AddCard extends Component {
     })
 
     state = {
-        deck_card_question: '',
-        deck_card_answer: ''
+        question: '',
+        answer: ''
     }
 
     createCard = () => {
         console.log(`createCard`)
+        const { decks } = this.props
+        const { deck } = this.props.navigation.state.params
+
+        const current_deck = decks[deck.title];
+        const { question, answer } = this.state
+
+        if (isEmptyOrNull(question) || isEmptyOrNull(answer)) {
+            return Alert.alert('Card Invalid!!', 'Please enter Question and Answer')
+        }
+        const card = { question, answer }
+        current_deck.questions.push(card)
+
+        saveCardToDeck(current_deck).then(value =>
+            this.props.addCardToDeck(current_deck)
+        )
+
+        this.navigateToDeckDetail(current_deck)
+    }
+
+    navigateToDeckDetail (current_deck) {
+        this.props.navigation.navigate('DeckDetail', {deck: current_deck})
     }
 
     render() {
-        const { deck_card_question, deck_card_answer } = this.state
+        const { question, answer } = this.state
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <Text style={styles.newCardLabelText}>Question</Text>
                 <TextInput style= {styles.input}
-                           value={deck_card_question}
+                           value={question}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
-                           onChangeText={(deck_card_question) => this.setState({deck_card_question})}/>
+                           onChangeText={(question) => this.setState({question})}/>
 
                 <Text style={styles.newCardLabelText}>Answer</Text>
                 <TextInput style= {styles.input}
-                           value={deck_card_answer}
+                           value={answer}
                            underlineColorAndroid="transparent"
                            autoCapitalize="none"
-                           onChangeText={(deck_card_answer) => this.setState({deck_card_answer})}/>
+                           onChangeText={(answer) => this.setState({answer})}/>
 
                 <TextButton style={styles.submitBtn} onPress={this.createCard}>
                     Submit
@@ -79,9 +101,10 @@ const styles = StyleSheet.create({
     }
 })
 
-function mapStateToProps (state, { navigation }) {
-    return {}
+function mapStateToProps ({decks}) {
+    return { decks }
 }
 
 export default connect(mapStateToProps, {
+    addCardToDeck
 })(AddCard)

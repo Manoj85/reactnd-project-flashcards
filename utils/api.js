@@ -11,3 +11,11 @@ export function saveDeckTitle(title) {
         [title]: { title: title, questions: [] }
     }))
 }
+
+export function saveCardToDeck(deck) {
+    console.log(`saveCardToDeck \n ${JSON.stringify(deck)}`)
+    const key = deck.title
+    return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+        [key]: deck
+    }))
+}

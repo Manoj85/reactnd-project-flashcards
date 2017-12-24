@@ -73,7 +73,11 @@ const MainNavigator = StackNavigator({
         screen: AddCard,
         navigationOptions: {
             tabBarLabel: 'Add Card',
-            tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+            tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />,
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: purple
+            }
         }
     }
 })

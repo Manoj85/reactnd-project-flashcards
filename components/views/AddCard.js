@@ -12,7 +12,7 @@ import { NavigationActions } from 'react-navigation'
 
 class AddCard extends Component {
     static navigationOptions = ({navigation}) => ({
-        title: 'Add Card'
+        title: `Add Card to ${navigation.state.params.deck.title}`
     })
 
     state = {
@@ -38,7 +38,20 @@ class AddCard extends Component {
             this.props.addCardToDeck(current_deck)
         )
 
+        Alert.alert(
+            'Card added!',
+            'You will be taken back to Deck Detail screen'
+        );
+
+        // Reset the state to its initial
+        this.resetState()
+
+        // Navigate back to the Detail View
         this.navigateToDeckDetail(current_deck)
+    }
+
+    resetState() {
+        this.setState({ question: '', answer: '' })
     }
 
     navigateToDeckDetail (current_deck) {

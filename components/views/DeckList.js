@@ -32,12 +32,16 @@ class DeckList extends Component {
         const { decks } = this.props
         const { ready } = this.state
 
+        /*
+            decks_arr --> Array of `Deck` objects
+            [
+                { "title": "", "questions": [] },
+                { "title": "", "questions": [] }
+            ]
+         */
         const decks_arr = _.keys(decks).map((key) => {
             return decks[key]
         })
-
-        console.log(`DeckList \n`)
-        console.log(`${JSON.stringify(decks_arr)}`)
 
         if (ready === false) {
             return <AppLoading />

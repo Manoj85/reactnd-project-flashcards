@@ -44,7 +44,7 @@ class DeckDetail extends Component {
                             Add Card
                         </TextButton>
                         <TextButton style={[styles.button, {backgroundColor: 'orange'}]} onPress={this.startQuiz} disabled={isTakeQuizDisabled}>
-                            Take Quiz
+                            Start Quiz
                         </TextButton>
                     </View>
                 </View>

@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation'
 import _ from 'lodash'
 
 import { white, red, blue, gray, lightPurp} from '../../utils/colors'
-import TextButton from '../shared/TextButton'
+import { roundToDecimals } from '../../utils/helper'
 
 class Quiz extends Component {
     static navigationOptions = ({navigation}) => ({
@@ -29,20 +29,21 @@ class Quiz extends Component {
     }
 
     checkAnswer = ( status ) => {
+        const { deck } = this.props.navigation.state.params
         console.log( `this.state.currentCardIdx = ${this.state.currentCardIdx} - TOTAL = ${deck.questions.length} - status = ${status}`)
 
         if ( this.state.currentCardIdx < deck.questions.length) {
             if (status === 'yes') {
                 console.log('yes')
+                this.state.correctAnswerCount = this.state.correctAnswerCount > 0 ? this.state.correctAnswerCount + 1 : 1
                 this.setState({
-                    correctAnswerCount: this.state.correctAnswerCount + 1,
                     currentCardIdx: this.state.currentCardIdx + 1,
                     showAnswer: false
                 })
             } else {
                 console.log('no')
+                this.state.correctAnswerCount = this.state.correctAnswerCount > 0 ? this.state.correctAnswerCount - 1 : 0
                 this.setState({
-                    correctAnswerCount: this.state.correctAnswerCount > 0 ? this.state.correctAnswerCount - 1: 0,
                     currentCardIdx: this.state.currentCardIdx + 1,
                     showAnswer: false
                 })
@@ -53,7 +54,7 @@ class Quiz extends Component {
             this.setState({
                 isQuizComplete: true,
                 showAnswer: false,
-                totalScorePercentage: ((this.state.correctAnswerCount + 1) * 100) / (deck.questions.length)
+                totalScorePercentage: ((this.state.correctAnswerCount) * 100) / (deck.questions.length)
             })
         }
 
@@ -67,6 +68,26 @@ class Quiz extends Component {
         Animated.spring(this.animatedValue, {
             toValue: 1
         }).start()
+    }
+
+    retakeQuiz() {
+        this.clearState()
+    }
+
+    goBackToDeckView() {
+        const { deck } = this.props.navigation.state.params
+        this.clearState()
+        this.props.navigation.dispatch(NavigationActions.back({deck: deck}))
+    }
+
+    clearState() {
+        this.setState({
+            correctAnswerCount: 0,
+            totalScorePercentage: 0,
+            isQuizComplete: false,
+            showAnswer: false,
+            currentCardIdx: 0
+        })
     }
 
     render() {
@@ -103,8 +124,21 @@ class Quiz extends Component {
                     )}
 
                     {isQuizComplete === true && (
-                        <View>
-                            <Text style={styles.quizProgress}>Total Score: {(totalScorePercentage)} %</Text>
+                        <View style={[styles.flipCard]}>
+
+                            <Text style={styles.quizProgress}>Total Correct Answers: {(correctAnswerCount)} </Text>
+                            <Text style={styles.quizProgress}>Total Score: {roundToDecimals(totalScorePercentage, 2)} %</Text>
+
+                            <View style={styles.flipBtnContainer}>
+                                <TouchableOpacity style={[styles.flipBtn, {backgroundColor: 'green'}]}
+                                                  onPress={() => this.retakeQuiz()}>
+                                    <Text>RETAKE QUIZ</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.flipBtn, {backgroundColor: 'red'}]}
+                                                  onPress={() => this.goBackToDeckView()}>
+                                    <Text>Back to Deck</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     )}
                 </View>

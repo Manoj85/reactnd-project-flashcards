@@ -17,5 +17,9 @@ export function isEmptyOrNull (s) {
     return s === null || (s.trim && s.trim() === '')
 }
 
+export function roundToDecimals(value, decimals) {
+    return Number(Math.round(value +'e'+ decimals) +'e-'+ decimals).toFixed(decimals);
+}
+
 
 

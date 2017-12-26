@@ -9,6 +9,8 @@ import { loadDecks} from '../../actions'
 import {blue, gray, white} from '../../utils/colors'
 import Deck from './Deck'
 
+import { setLocalNotification } from '../../utils/helper'
+
 class DeckList extends Component {
     state = {
         ready: false
@@ -20,11 +22,13 @@ class DeckList extends Component {
             .then(({decks}) => {
                 this.setState(() => ({ready: true}))
             })
+            .then(() => {
+                setLocalNotification()
+            })
         ;
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log(`componentWillReceiveProps`)
         const decks = nextProps.decks
     }
 

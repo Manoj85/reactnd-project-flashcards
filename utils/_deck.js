@@ -7,7 +7,6 @@ import { isEmpty } from './helper'
 export const DECK_STORAGE_KEY = 'UdaciFlashcards:deck'
 
 function setDummyData () {
-    console.log(` ==== setDummyData ==== \n`)
     let dummyData = {
         "React": {
             "title": "React",
@@ -39,12 +38,10 @@ function setDummyData () {
 }
 
 export function setDeckData (decks) {
-    console.log(` ==== setDeckData ==== \n`)
     return decks
 }
 
 export function setDeckResults (results) {
-    console.log(` ==== setDeckResults ==== \n`)
     const parsedResults = results === null ? {} : JSON.parse(results)
     return isEmpty(parsedResults)
         ? setDummyData()

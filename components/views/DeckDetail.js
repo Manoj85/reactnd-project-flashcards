@@ -12,23 +12,16 @@ class DeckDetail extends Component {
 
 
     addCardToDeck = () => {
-        console.log(`addCardToDeck`)
         const { deck } = this.props.navigation.state.params
         this.props.navigation.navigate('AddCard', { deck });
     }
 
     startQuiz = () => {
-        console.log(`startQuiz\n`)
         const { deck } = this.props.navigation.state.params
-
-        console.log(`${JSON.stringify(deck)}`)
         this.props.navigation.navigate('Quiz', { deck })
     }
 
     render() {
-        console.log(`DeckDetail`)
-        // console.log(JSON.stringify(this.props))
-
         const { decks } = this.props
         const { deck } = this.props.navigation.state.params
 

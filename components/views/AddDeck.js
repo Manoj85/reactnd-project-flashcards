@@ -21,7 +21,6 @@ class AddDeck extends Component {
     }
 
     createDeck = () => {
-        console.log(`createDeck`)
         const { deck_title } = this.state
 
         if (isEmptyOrNull(deck_title)) {

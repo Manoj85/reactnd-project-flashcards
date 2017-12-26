@@ -3,7 +3,6 @@ import { combineReducers } from 'redux'
 import { GET_DECKS, ADD_DECK, ADD_CARD_TO_DECK } from '../actions/actionTypes'
 
 function decks (state = {}, action) {
-    console.log(`decks reducer`)
     const { decks, deck, card } = action
 
     switch (action.type) {

@@ -30,18 +30,15 @@ class Quiz extends Component {
 
     checkAnswer = ( status ) => {
         const { deck } = this.props.navigation.state.params
-        console.log( `this.state.currentCardIdx = ${this.state.currentCardIdx} - TOTAL = ${deck.questions.length} - status = ${status}`)
 
         if ( this.state.currentCardIdx < deck.questions.length) {
             if (status === 'yes') {
-                console.log('yes')
                 this.state.correctAnswerCount = this.state.correctAnswerCount > 0 ? this.state.correctAnswerCount + 1 : 1
                 this.setState({
                     currentCardIdx: this.state.currentCardIdx + 1,
                     showAnswer: false
                 })
             } else {
-                console.log('no')
                 this.state.correctAnswerCount = this.state.correctAnswerCount > 0 ? this.state.correctAnswerCount - 1 : 0
                 this.setState({
                     currentCardIdx: this.state.currentCardIdx + 1,
@@ -57,8 +54,6 @@ class Quiz extends Component {
                 totalScorePercentage: ((this.state.correctAnswerCount) * 100) / (deck.questions.length)
             })
         }
-
-        console.log( `this.state.correctAnswerCount = ${this.state.correctAnswerCount}`)
     }
 
     flipCard() {

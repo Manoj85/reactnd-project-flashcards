@@ -7,7 +7,6 @@ class Deck extends Component {
 
     render() {
         const {deck, decks} = this.props
-        // console.log(JSON.stringify(decks))
 
         const deck_key = deck['title']
         const deck_title = decks[deck_key].title

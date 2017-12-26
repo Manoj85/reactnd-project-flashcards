@@ -20,7 +20,6 @@ class AddCard extends Component {
     }
 
     createCard = () => {
-        console.log(`createCard`)
         const { decks } = this.props
         const { deck } = this.props.navigation.state.params
 

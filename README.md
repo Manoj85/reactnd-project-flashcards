@@ -15,9 +15,20 @@ including handling infinite lists, routing, and user input.
 
 ### Installation
 
+ * Install `expo` on you PC and mobile as well
  * cd `reactnd-project-flashcards`
+ * `yarn install`
  * `yarn start`
 
+ To view the app with live reloading, point the Expo app to the QR code.
+ You'll find the QR scanner on the Projects tab of the app.
+ 
+ Press Ctrl+C at any time to stop.
+ 
+    Press a to open Android device or emulator, or i to open iOS emulator.
+    Press q to display QR code.
+    Press r to restart packager, or R to restart packager and clear cache.
+    Press d to toggle development mode. (current mode: development)
 
 ### Specific Requirements
 
@@ -59,7 +70,7 @@ Our application will have five views.
         An option to enter in the title for the new deck
         An option to submit the new deck title
 
-   **New Question View**
+   **New Question (or Card) View**
     
         An option to enter in the question
         An option to enter in the answer
@@ -105,7 +116,7 @@ Notice each deck creates a new key on the object.
 * Each deck has a `title` and a `questions` key. 
 * title is the `title` for the specific deck and questions is an `array of questions and answers` for that deck.
 
-### Tip
+### Methods
 
 To manage your AsyncStorage database, we created four different helper methods.
 

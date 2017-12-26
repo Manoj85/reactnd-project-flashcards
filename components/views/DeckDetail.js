@@ -40,10 +40,10 @@ class DeckDetail extends Component {
 
                 <View style={styles.buttonContainer}>
                     <View style={{alignItems: 'stretch'}}>
-                        <TextButton style={styles.button} onPress={this.addCardToDeck}>
+                        <TextButton style={[styles.button, {backgroundColor: 'blue'}]} onPress={this.addCardToDeck}>
                             Add Card
                         </TextButton>
-                        <TextButton style={styles.button} onPress={this.startQuiz} disabled={isTakeQuizDisabled}>
+                        <TextButton style={[styles.button, {backgroundColor: 'orange'}]} onPress={this.startQuiz} disabled={isTakeQuizDisabled}>
                             Take Quiz
                         </TextButton>
                     </View>
@@ -67,8 +67,15 @@ const styles = StyleSheet.create({
         borderWidth: 0
     },
     button: {
-        alignItems: 'stretch',
-        backgroundColor: lightPurp
+        alignItems: 'center',
+        justifyContent: 'center',
+
+
+        padding: 10,
+        margin: 10,
+        width: 300,
+        height: 50,
+        borderRadius: 10
     }
 })
 

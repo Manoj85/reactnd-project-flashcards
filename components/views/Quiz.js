@@ -14,6 +14,7 @@ class Quiz extends Component {
 
     state = {
         correctAnswerCount: 0,
+        totalScorePercentage: 0,
         isQuizComplete: false,
         showAnswer: false,
         currentCardIdx: 0
@@ -25,10 +26,38 @@ class Quiz extends Component {
         this.animatedValue.addListener(({ value }) => {
             this.value = value;
         })
-        this.frontInterpolate = this.animatedValue.interpolate({
-            inputRange: [0, 180],
-            outputRange: ['0deg', '180deg']
-        })
+    }
+
+    checkAnswer = ( status ) => {
+        console.log( `this.state.currentCardIdx = ${this.state.currentCardIdx} - TOTAL = ${deck.questions.length} - status = ${status}`)
+
+        if ( this.state.currentCardIdx < deck.questions.length) {
+            if (status === 'yes') {
+                console.log('yes')
+                this.setState({
+                    correctAnswerCount: this.state.correctAnswerCount + 1,
+                    currentCardIdx: this.state.currentCardIdx + 1,
+                    showAnswer: false
+                })
+            } else {
+                console.log('no')
+                this.setState({
+                    correctAnswerCount: this.state.correctAnswerCount > 0 ? this.state.correctAnswerCount - 1: 0,
+                    currentCardIdx: this.state.currentCardIdx + 1,
+                    showAnswer: false
+                })
+            }
+        }
+
+        if ( this.state.currentCardIdx === deck.questions.length - 1) {
+            this.setState({
+                isQuizComplete: true,
+                showAnswer: false,
+                totalScorePercentage: ((this.state.correctAnswerCount + 1) * 100) / (deck.questions.length)
+            })
+        }
+
+        console.log( `this.state.correctAnswerCount = ${this.state.correctAnswerCount}`)
     }
 
     flipCard() {
@@ -43,48 +72,58 @@ class Quiz extends Component {
     render() {
         const { decks } = this.props
         const { deck } = this.props.navigation.state.params
-        const { correctAnswerCount, isQuizComplete, currentCardIdx, showAnswer } = this.state
-        console.log(JSON.stringify(deck))
-
-        const frontAnimatedStyle = {
-            transform: [
-                { rotateY: this.frontInterpolate}
-            ]
-        }
-
-        const questionCount = deck.questions.length
-        let remainingCount = questionCount
-
-        const currentCard = deck.questions[currentCardIdx]
+        const { correctAnswerCount, totalScorePercentage, isQuizComplete, currentCardIdx, showAnswer } = this.state
+        const totalQuestions = deck.questions.length
 
         return (
             <View style={styles.container}>
 
-                <View style={{justifyContent: 'flex-start', marginBottom: 20}}>
-                    <Text style={styles.quizProgress}>{remainingCount}/{questionCount}</Text>
-                </View>
+                {isQuizComplete === false && (
+                    <View style={{justifyContent: 'flex-start', marginBottom: 20, justifyContent: 'space-between'}}>
+                        <Text style={styles.quizProgress}>Question: {currentCardIdx} OF {totalQuestions}</Text>
+                        <Text style={styles.quizProgress}>Score: {correctAnswerCount} OF {totalQuestions}</Text>
+                    </View>
+                )}
 
                 <View style={styles.flipcontainer}>
-                    <View style={{alignItems: 'stretch'}}>
-                        <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-                            <Text style={styles.flipText}>
-                                { showAnswer ? currentCard.answer : currentCard.question }
-                            </Text>
-                        </Animated.View>
-                    </View>
-                    <TouchableOpacity onPress={() => this.flipCard()}>
-                        <Text style={styles.flipTextBtn}>{ showAnswer ? 'Back to Question' : 'Answer' }</Text>
-                    </TouchableOpacity>
+
+                    {isQuizComplete === false && (currentCardIdx < totalQuestions) && (
+                        <View>
+                            <View style={{alignItems: 'stretch'}}>
+                                <Animated.View style={[styles.flipCard]}>
+                                    <Text style={styles.flipText}>
+                                        { showAnswer ? deck.questions[currentCardIdx].answer : deck.questions[currentCardIdx].question }
+                                    </Text>
+                                </Animated.View>
+                            </View>
+                            <TouchableOpacity onPress={() => this.flipCard()}>
+                                <Text style={styles.flipTextBtn}>{ showAnswer ? 'Back to Question' : 'Answer' }</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+
+                    {isQuizComplete === true && (
+                        <View>
+                            <Text style={styles.quizProgress}>Total Score: {(totalScorePercentage)} %</Text>
+                        </View>
+                    )}
                 </View>
 
-                <View style={styles.flipBtnContainer}>
-                    <TouchableOpacity style={styles.flipBtn} onPress={() => this.flipCard()}>
-                        <Text>CORRECT</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.flipBtn} onPress={() => this.flipCard()}>
-                        <Text>INCORRECT</Text>
-                    </TouchableOpacity>
-                </View>
+                {showAnswer === true && (
+                    <View style={styles.flipBtnContainer}>
+                        <TouchableOpacity style={[styles.flipBtn, {backgroundColor: 'green'}]}
+                                          onPress={() => this.checkAnswer('yes')}>
+                            <Text>CORRECT</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.flipBtn, {backgroundColor: 'red'}]}
+                                          onPress={() => this.checkAnswer('no')}>
+                            <Text>INCORRECT</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+
+
+
             </View>
         )
     }
@@ -113,7 +152,8 @@ const styles = StyleSheet.create({
     quizProgress: {
         fontSize: 18,
         fontWeight: '500',
-        marginBottom: 10
+        marginBottom: 10,
+        marginLeft: 25
     },
     flipCard: {
         width: 300,
@@ -142,10 +182,18 @@ const styles = StyleSheet.create({
     },
     flipBtn: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
+        backgroundColor: '#DDDDDD',
+        padding: 10,
+        margin: 10,
+        width: 300,
+        height: 50,
+        borderRadius: 10
     },
     flipBtnContainer: {
         padding: 10,
+
         alignItems: 'center',
         justifyContent: 'flex-end'
     }

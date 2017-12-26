@@ -4,12 +4,12 @@ import { AppLoading} from 'expo'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import { getDecks, fetchDeckResults } from '../../utils/api'
+import { fetchDeckResults } from '../../utils/api'
 import { loadDecks} from '../../actions'
 import {blue, gray, white} from '../../utils/colors'
 import Deck from './Deck'
 
-import { setLocalNotification } from '../../utils/helper'
+import { setLocalNotification, clearLocalNotification } from '../../utils/helper'
 
 class DeckList extends Component {
     state = {
@@ -23,7 +23,8 @@ class DeckList extends Component {
                 this.setState(() => ({ready: true}))
             })
             .then(() => {
-                setLocalNotification()
+                clearLocalNotification()
+                    .then(setLocalNotification)
             })
         ;
     }

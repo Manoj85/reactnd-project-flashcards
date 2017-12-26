@@ -94,11 +94,19 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
-        backgroundColor: white
+        backgroundColor: 'rgba(240,240,240,0.5)',
+        shadowColor: 'rgba(0,0,0,0.3)',
+        shadowRadius: 5,
+        shadowOpacity: 0.3,
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        borderColor: 'rgba(230,230,230,1)',
+        borderWidth: 2
     },
     flipcontainer: {
         flex: 1,
-        padding: 10,
         alignItems: 'stretch',
         justifyContent: 'center'
     },
@@ -111,8 +119,8 @@ const styles = StyleSheet.create({
         width: 300,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: white,
-        backfaceVisibility: 'hidden'
+        backfaceVisibility: 'hidden',
+        opacity: this.animatedValue
     },
     flipCardBack: {
         backgroundColor: white,

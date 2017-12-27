@@ -123,4 +123,16 @@ To manage your AsyncStorage database, we created four different helper methods.
 * **getDecks**: return all of the decks along with their titles, questions, and answers.
 * **getDeck**: take in a single id argument and return the deck associated with that id.
 * **saveDeckTitle**: take in a single title argument and add it to the decks.
-* **addCardToDeck**: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title. 
+* **addCardToDeck**: take in two arguments, title and card, and will add the card to the list of questions for the deck with the associated title.
+
+### References
+
+1.	https://medium.com/@arpith/disabling-buttons-in-react-native-dfd683c25634
+2.	https://moduscreate.com/blog/react-native-listview-with-section-headers/
+3.	https://facebook.github.io/react-native/docs/platform-specific-code.html
+4.	https://medium.com/the-react-native-log/understanding-react-native-flexbox-layout-7a528200afd4
+5.	https://www.styled-components.com/
+6.	https://facebook.github.io/react-native/docs/statusbar.html#props
+7.	https://reactnavigation.org/docs/navigators/tab
+8.	https://medium.com/@swathylenjini/stack-navigation-in-react-native-2cd00374ff3a
+9.	https://reactnavigation.org/docs/navigators/drawer

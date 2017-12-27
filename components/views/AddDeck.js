@@ -34,16 +34,19 @@ class AddDeck extends Component {
             )
             .then(() => this.resetDeskTitle())
 
-        // Navigate back to Deck View or Deck List
-        this.goBackToDeckListView()
+        // Navigate back to Deck View
+        this.navigateToDeckDetailView()
     }
 
     resetDeskTitle = () => {
         this.setState(() => ({ 'deck_title': '' }) )
     }
 
-    goBackToDeckListView() {
-        this.props.navigation.dispatch(NavigationActions.back())
+    navigateToDeckDetailView() {
+        const { deck_title } = this.state
+        const item = {title: deck_title, questions: []}
+
+        this.props.navigation.navigate('DeckDetail', {deck: item})
     }
 
     render() {
@@ -94,8 +97,8 @@ const styles = StyleSheet.create({
     }
 })
 
-function mapStateToProps (state, { navigation }) {
-    return {}
+function mapStateToProps ({decks}) {
+    return { decks }
 }
 
 export default connect(mapStateToProps, {

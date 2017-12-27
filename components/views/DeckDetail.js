@@ -10,7 +10,6 @@ class DeckDetail extends Component {
         title: navigation.state.params.deck.title
     })
 
-
     addCardToDeck = () => {
         const { deck } = this.props.navigation.state.params
         this.props.navigation.navigate('AddCard', { deck });
@@ -29,7 +28,10 @@ class DeckDetail extends Component {
 
         return (
             <View style={styles.container}>
-                <Deck deck={deck} />
+                <View>
+                    <Text style={styles.deckTitle}>{deck.title}</Text>
+                    <Text style={styles.deckCardCount}>{deck.questions.length > 0 ? deck.questions.length : 0} cards</Text>
+                </View>
 
                 <View style={styles.buttonContainer}>
                     <View style={{alignItems: 'stretch'}}>
@@ -62,13 +64,27 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         justifyContent: 'center',
-
-
         padding: 10,
         margin: 10,
         width: 300,
         height: 50,
         borderRadius: 10
+    },
+    deckTitle: {
+        marginTop: 10,
+        marginBottom: 5,
+        fontSize: 16,
+        color: '#333',
+        fontWeight: '600',
+        textAlign: 'center'
+    },
+    deckCardCount: {
+        marginTop: 5,
+        marginBottom: 10,
+        fontSize: 13,
+        color: '#999',
+        fontWeight: '300',
+        textAlign: 'center'
     }
 })
 

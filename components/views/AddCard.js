@@ -53,8 +53,8 @@ class AddCard extends Component {
     }
 
     navigateToDeckDetail (current_deck) {
-        // this.props.navigation.navigate('DeckDetail', {deck: current_deck})
-        this.props.navigation.dispatch(NavigationActions.back())
+        this.props.navigation.navigate('DeckDetail', {deck: current_deck})
+        // this.props.navigation.dispatch(NavigationActions.back())
     }
 
     render() {

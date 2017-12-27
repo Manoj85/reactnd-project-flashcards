@@ -21,11 +21,23 @@ class Quiz extends Component {
     }
 
     componentWillMount() {
-        this.animatedValue = new Animated.Value(0);
-        this.value = 0;
+        this.animatedValue = new Animated.Value(0)
+        this.value = 0
         this.animatedValue.addListener(({ value }) => {
-            this.value = value;
+            this.value = value
         })
+        this.frontInterpolate = this.animatedValue.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['0deg', '180deg']
+        })
+        this.backInterpolate = this.animatedValue.interpolate({
+            inputRange: [0, 180],
+            outputRange: ['180deg', '0deg']
+        })
+    }
+
+    componentWillUnmount() {
+        this.animatedValue.removeAllListeners()
     }
 
     checkAnswer = ( status ) => {
@@ -60,9 +72,26 @@ class Quiz extends Component {
         const { showAnswer } = this.state
 
         this.setState({ showAnswer: !showAnswer })
+        /*
         Animated.spring(this.animatedValue, {
             toValue: 1
         }).start()
+        */
+
+        if(this.value >= 90) {
+            Animated.spring(this.animatedValue, {
+                toValue: 0,
+                friction: 8,
+                tension: 10,
+            }).start()
+        } else {
+            Animated.spring(this.animatedValue, {
+                toValue: 180,
+                friction: 8,
+                tension: 10,
+            }).start()
+        }
+
     }
 
     retakeQuiz() {
@@ -91,6 +120,18 @@ class Quiz extends Component {
         const { correctAnswerCount, totalScorePercentage, isQuizComplete, currentCardIdx, showAnswer } = this.state
         const totalQuestions = deck.questions.length
 
+        const frontAnimatedStyle = {
+            transform: [
+                { rotateY: this.frontInterpolate}
+            ]
+        }
+
+        const backAnimatedStyle = {
+            transform: [
+                { rotateY: this.backInterpolate}
+            ]
+        }
+
         return (
             <View style={styles.container}>
 
@@ -106,13 +147,27 @@ class Quiz extends Component {
                     {isQuizComplete === false && (currentCardIdx < totalQuestions) && (
                         <View>
                             <View style={{alignItems: 'stretch'}}>
+                                {/*
                                 <Animated.View style={[styles.flipCard]}>
                                     <Text style={styles.flipText}>
                                         { showAnswer ? deck.questions[currentCardIdx].answer : deck.questions[currentCardIdx].question }
                                     </Text>
                                 </Animated.View>
+                                */}
+
+                                {showAnswer ?
+
+                                    <Animated.View style={[backAnimatedStyle, styles.flipCard]}>
+                                        <Text style={styles.flipText}>{deck.questions[currentCardIdx].answer}</Text>
+                                    </Animated.View>
+
+                                    :
+                                    <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
+                                        <Text style={styles.flipText}>{deck.questions[currentCardIdx].question}</Text>
+                                    </Animated.View>
+                                }
                             </View>
-                            <TouchableOpacity onPress={() => this.flipCard()}>
+                            <TouchableOpacity style={{alignItems: 'stretch'}} onPress={() => this.flipCard()}>
                                 <Text style={styles.flipTextBtn}>{ showAnswer ? 'Back to Question' : 'Answer' }</Text>
                             </TouchableOpacity>
                         </View>
@@ -185,14 +240,12 @@ const styles = StyleSheet.create({
         marginLeft: 25
     },
     flipCard: {
-        width: 300,
+        width: 320,
         alignItems: 'center',
-        justifyContent: 'center',
-        backfaceVisibility: 'hidden',
-        opacity: this.animatedValue
+        justifyContent: 'flex-start',
+        backfaceVisibility: 'hidden'
     },
     flipCardBack: {
-        backgroundColor: white,
         position: 'absolute',
         top: 0
     },
@@ -207,12 +260,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 15,
         color: red,
-        fontSize: 16
+        fontSize: 16,
+        position: 'relative'
     },
     flipBtn: {
         alignItems: 'center',
         justifyContent: 'center',
-
         backgroundColor: '#DDDDDD',
         padding: 10,
         margin: 10,
@@ -222,14 +275,11 @@ const styles = StyleSheet.create({
     },
     flipBtnContainer: {
         padding: 10,
-
         alignItems: 'center',
         justifyContent: 'flex-end'
     }
 })
 
-function mapStateToProps({ decks }) {
-    return { decks }
-}
+const mapStateToProps = ({ decks }) => ({ decks })
 
 export default connect(mapStateToProps)(Quiz)

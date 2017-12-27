@@ -136,3 +136,4 @@ To manage your AsyncStorage database, we created four different helper methods.
 7.	https://reactnavigation.org/docs/navigators/tab
 8.	https://medium.com/@swathylenjini/stack-navigation-in-react-native-2cd00374ff3a
 9.	https://reactnavigation.org/docs/navigators/drawer
+10. http://browniefed.com/react-native-animation-book/api/ANIMATED_REMOVE_LISTENERS.html

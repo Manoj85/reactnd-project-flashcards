@@ -26,7 +26,7 @@ export function roundToDecimals(value, decimals) {
     return Number(Math.round(value +'e'+ decimals) +'e-'+ decimals).toFixed(decimals);
 }
 
-export function clearLocalNotification () {
+export const clearLocalNotification = () => {
     return AsyncStorage.removeItem(NOTIFICATION_KEY)
         .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
